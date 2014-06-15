@@ -28,9 +28,9 @@ def chunk_it(seq, size):
 import csv
 def write_chunk(sorted_keys, data_source, folder):
 	dest_file = folder + "/" + sorted_keys[0].replace(" ","_").lower() + ".csv"
-	rows = [[name] + data_source[name] for name in sorted_keys]
+	rows = [[name.lower()] + data_source[name] for name in sorted_keys]
 	with open(dest_file, 'wb') as csvfile:
-		filewriter = csv.writer(csvfile, delimiter=' ',
+		filewriter = csv.writer(csvfile, delimiter=',',
 			quotechar='|', quoting=csv.QUOTE_MINIMAL)
 		for row in rows:
 			filewriter.writerow(row)
@@ -76,8 +76,8 @@ def get_data(directory, mf):
 		write_chunk(chunk, names, "files/"+mf)
 	# write the index
 	import json
-	with open("files/"+mf+"/index.txt", 'w') as outfile:
-		json.dump({"first_names":chunk_1_names, "first_year":1880}, outfile)
+	with open("files/"+mf+"/index.json", 'w') as outfile:
+		json.dump({"first_names":chunk_1_names, "all_names":alpha_names, "first_year":1880}, outfile)
 		
 
 if __name__ == "__main__":

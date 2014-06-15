@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title> Name Age Visualizer</title>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/proxy.js"></script>
+		<script src="js/fetcher.js"></script>
+		<script src="js/csv.js"></script>
+		<script src="js/visualizations.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<style>
+			.born {
+			  fill: steelblue;
+			  opacity:0.2;
+			}
+
+			.born:hover {
+			  fill: brown;
+			}
+			
+			.alive {
+			  fill: steelblue;
+			}
+
+			.alive:hover {
+			  fill: brown;
+			}
+
+			.axis {
+			  font: 10px sans-serif;
+			}
+
+			.axis path,
+			.axis line {
+			  fill: none;
+			  stroke: #000;
+			  shape-rendering: crispEdges;
+			}
+
+			.x.axis path {
+			  display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h2> Estimate the age of your name!</h2>
+		<p> If all you knew was someone's name, could you estimate their age. According to Nate Silver and Allison Mccann, yes - sometimes.</p>
+		<p> Based off of their article on this subject <a href="http://fivethirtyeight.com/features/how-to-tell-someones-age-when-all-you-know-is-her-name/">How to Tell Someone&#8217;s Age When All You Know Is Her Name</a></p>
+		<p> Right now, this data is based purely of off the data from the SSA website - I haven't prorated the names before 1930 like Nate and Allison did. So at this point, older names are probably under-represented</p>
+		
+	</body>
+	<script> 
+		var fetcher = new NameAgeFetcher()
+		fetcher.init().then(function(){
+			console.log("ALIVE")
+			return fetcher.getData({name:"Brittany",gender:"Female"}).then(function(data){
+				try{
+					console.log("KICKING!!!");
+					new Visualizer().useDataSource(data);
+					console.log("ASSDFFSDF");
+				} catch(err) {
+					console.log(err);
+				}
+			});
+		})
+	 </script>
+</html>
